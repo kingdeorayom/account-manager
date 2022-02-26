@@ -1,0 +1,16 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+.navbar {
+  background-color: whitesmoke;
+}
+
+.navbar-brand,
+.nav-link {
+  color: brown;
+}
+
+.nav-link:hover {
+  color: lightgrey;
+}
