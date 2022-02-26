@@ -58,18 +58,6 @@
                 hide_eye.style.display = "none";
             }
         }
-
-        function showHidePasswordRegistration() {
-            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
-            var textFieldConfirmPasswordInputType = document.getElementById("textFieldConfirmPassword");
-            if (textFieldPasswordInputType.type === "password") {
-                textFieldPasswordInputType.type = "text";
-                textFieldConfirmPasswordInputType.type = "text";
-            } else {
-                textFieldPasswordInputType.type = "password";
-                textFieldConfirmPasswordInputType.type = "password";
-            }
-        }
     </script>
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
 </body>

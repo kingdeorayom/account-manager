@@ -40,29 +40,13 @@
                     </form>
                     <div class="text-center py-2">
                         <hr class="my-4">
-                        <label class="login-text">Aready have an account? <a href="../../../index.php" style="text-decoration: none; color: green">Click here to login</a></label>
+                        <label class="login-text">Already have an account? <a href="../../../index.php" style="text-decoration: none; color: green">Click here to login</a></label>
                     </div>
                 </div>
             </div>
         </div>
     </main>
     <script>
-        function showHidePasswordLogin() {
-            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
-            var show_eye = document.getElementById("show_eye");
-            var hide_eye = document.getElementById("hide_eye");
-            hide_eye.classList.remove("d-none");
-            if (textFieldPasswordInputType.type === "password") {
-                textFieldPasswordInputType.type = "text";
-                show_eye.style.display = "none";
-                hide_eye.style.display = "block";
-            } else {
-                textFieldPasswordInputType.type = "password";
-                show_eye.style.display = "block";
-                hide_eye.style.display = "none";
-            }
-        }
-
         function showHidePasswordRegistration() {
             var textFieldPasswordInputType = document.getElementById("textFieldPassword");
             var textFieldConfirmPasswordInputType = document.getElementById("textFieldConfirmPassword");
