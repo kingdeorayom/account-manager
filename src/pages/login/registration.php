@@ -46,7 +46,35 @@
             </div>
         </div>
     </main>
-    <?php include_once '../../../scripts/custom/showHidePasswordLoginRegister.php' ?>
+    <script>
+        function showHidePasswordLogin() {
+            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (textFieldPasswordInputType.type === "password") {
+                textFieldPasswordInputType.type = "text";
+                show_eye.style.display = "none";
+                hide_eye.style.display = "block";
+            } else {
+                textFieldPasswordInputType.type = "password";
+                show_eye.style.display = "block";
+                hide_eye.style.display = "none";
+            }
+        }
+
+        function showHidePasswordRegistration() {
+            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
+            var textFieldConfirmPasswordInputType = document.getElementById("textFieldConfirmPassword");
+            if (textFieldPasswordInputType.type === "password") {
+                textFieldPasswordInputType.type = "text";
+                textFieldConfirmPasswordInputType.type = "text";
+            } else {
+                textFieldPasswordInputType.type = "password";
+                textFieldConfirmPasswordInputType.type = "password";
+            }
+        }
+    </script>
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
 </body>
 
