@@ -1,3 +1,21 @@
 .login-text {
   font-family: "Open Sans", sans-serif;
 }
+
+.no-account {
+  text-decoration: none;
+  color: green;
+}
+
+.no-account:hover {
+  text-decoration: underline;
+  color: green;
+}
+
+.resend-verification-code {
+  color: green;
+}
+.resend-verification-code:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

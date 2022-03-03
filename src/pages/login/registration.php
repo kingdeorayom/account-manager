@@ -23,7 +23,10 @@
                         <h3 class="login-text">Account Manager</h3>
                         <p class="login-text">Register for an account</p>
                     </div>
-                    <form action="#" method="POST">
+                    <div class="row py-2" id="alert-container-register">
+                        <!--  -->
+                    </div>
+                    <form onsubmit="submitRegister(event)" name="register-form">
                         <label class="login-text my-2">Name</label>
                         <input type="text" class="form-control " name="textFieldName" id="textFieldName">
                         <label class="login-text my-2">Email</label>
@@ -56,6 +59,48 @@
             } else {
                 textFieldPasswordInputType.type = "password";
                 textFieldConfirmPasswordInputType.type = "password";
+            }
+        }
+    </script>
+    <script>
+        var alertRegister = document.getElementById('alert-container-register');
+
+        function submitRegister(event) {
+            event.preventDefault();
+            var registerForm = document.forms.namedItem('register-form');
+            var registerData = new FormData(registerForm);
+            postRegister(registerData).then(data => checkResponseRegister(JSON.parse(data)))
+        }
+
+        function postRegister(data) {
+            return new Promise((resolve, reject) => {
+                var http = new XMLHttpRequest();
+                http.open("POST", "../../process/register.php");
+                http.onload = () => http.status == 200 ? resolve(http.response) : reject(Error(http.statusText));
+                http.onerror = (e) => reject(Error(`Networking error: ${e}`));
+                http.send(data)
+            })
+        }
+
+        function checkResponseRegister(data) {
+            console.log(data)
+            if (data.response === "empty_fields") {
+                alertRegister.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "passwords_mismatch") {
+                alertRegister.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> <code>Password</code> and <code>Confirm Password</code> do not match.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "not_school_email") {
+                alertRegister.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid email!</strong> Please use your school email.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "email_exists") {
+                alertRegister.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>An account with this email already exists.</strong> Try another one.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "invalid_email") {
+                alertRegister.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please enter a valid e-mail.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "success") {
+                window.location = "account-verification.php";
             }
         }
     </script>

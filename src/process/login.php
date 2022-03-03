@@ -5,8 +5,19 @@ session_start();
 include_once '../includes/connection.php';
 
 if (!isset($_POST['textFieldEmail'], $_POST['textFieldPassword'])) {
-    exit('Please fill both the username and password fields!');
+    header("location: ../../index.php");
+    exit();
 }
+
+if (empty($_POST['textFieldEmail'] && $_POST['textFieldPassword'])) {
+    // $_SESSION['emptyInput'] = "Invalid input. Fill up all fields.";
+    // header("location: ../../index.php");
+    $arr = array('response' => "empty_fields");
+    header('Content-Type: application/json');
+    echo json_encode($arr);
+    exit();
+}
+
 
 if ($statement = $connection->prepare('SELECT user_id, password FROM users WHERE email = ?')) {
     $statement->bind_param('s', $_POST['textFieldEmail']);
@@ -23,15 +34,22 @@ if ($statement = $connection->prepare('SELECT user_id, password FROM users WHERE
             $_SESSION['name'] = $_POST['textFieldEmail'];
             $_SESSION['id'] = $id;
 
-            header('location: ../pages/home.php');
-            exit();
+            // header('location: ../pages/home.php');
+            // exit();
+            $arr = array('response' => "login_success");
+            header('Content-Type: application/json');
+            echo json_encode($arr);
         } else {
             // Incorrect password
-            echo 'Incorrect password!';
+            $arr = array('response' => "incorrect_credentials");
+            header('Content-Type: application/json');
+            echo json_encode($arr);
         }
     } else {
         // Incorrect email
-        echo 'Incorrect email!';
+        $arr = array('response' => "incorrect_credentials");
+        header('Content-Type: application/json');
+        echo json_encode($arr);
     }
 
     $statement->close();
