@@ -46,7 +46,7 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
                         <h3 class="login-text">Account Manager</h3>
                         <p class="login-text">Register for an account</p>
                     </div> -->
-                    <div class="row py-2" id="alert-container-register">
+                    <div class="row py-2" id="alert-container-reset-password">
                         <?php
 
                         if (isset($_SESSION['emptyInput'])) { ?>
@@ -69,14 +69,15 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
 
                         ?>
                     </div>
-                    <form action="../../process/reset-password-actual.php" method="POST">
+                    <form onsubmit="submitResetPassword(event)" name="reset-password-form">
+                        <!-- <form action="../../process/reset-password-actual.php" method="POST"> -->
                         <h3 class="login-text">Reset your password</h3>
                         <label class="login-text my-2">Enter new password</label>
                         <input type="password" class="form-control" name="textFieldPassword" id="textFieldPassword">
                         <label class="login-text my-2">Confirm password</label>
                         <input type="password" class="form-control mb-3" name="textFieldConfirmPassword" id="textFieldConfirmPassword">
                         <div class="form-check">
-                            <input onclick="showHidePasswordReset();" class="form-check-input" type="checkbox" value="" id="checkBoxShowHidePassword">
+                            <input class="form-check-input" type="checkbox" value="" id="checkBoxShowHidePassword">
                             <label class="form-check-label" for="checkBoxShowHidePassword">Show/Hide Password</label>
                         </div>
                         <button class="btn text-white w-100 mt-3 mb-2 bg-success" type="submit" name="buttonRegister" id="buttonRegister">Reset password</button>
@@ -97,6 +98,41 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
             });
         });
     </script>
+
+    <script>
+        var alertReset = document.getElementById('alert-container-reset-password')
+
+        function submitResetPassword(event) {
+            event.preventDefault();
+            var resetForm = document.forms.namedItem('reset-password-form');
+            var resetData = new FormData(resetForm)
+            postReset(resetData).then(data => checkResetResponse(JSON.parse(data)));
+        }
+
+        function postReset(data) {
+            return new Promise((resolve, reject) => {
+                var http = new XMLHttpRequest();
+                http.open("POST", "../../process/reset-password-actual.php");
+                http.onload = () => http.status == 200 ? resolve(http.response) : reject(Error(http.statusText));
+                http.onerror = (e) => reject(Error(`Networking error: ${e}`));
+                http.send(data)
+            })
+        }
+
+        function checkResetResponse(data) {
+            console.log(data)
+            if (data.response === "login_success") {
+                window.location.href = "../../../index.php";
+            }
+            if (data.response === "empty_fields") {
+                alertReset.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "password_mismatch") {
+                alertReset.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> <code>Password</code> and <code>Confirm Password</code> do not match.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+        }
+    </script>
+
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
     <script src="../../../scripts/bootstrap/bootstrap.js"></script>
 </body>

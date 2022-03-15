@@ -59,7 +59,6 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
                         <?php
                             unset($_SESSION['emailDoesNotExists']);
                         }
-
                         ?>
                     </div>
                     <form action="../../process/forgot-password-email-verify.php" method="POST">

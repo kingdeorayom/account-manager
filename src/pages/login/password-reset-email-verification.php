@@ -32,11 +32,11 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
                         <h3 class="login-text">Account Manager</h3>
                         <p class="login-text">Store and manage your accounts—all in one place</p>
                     </div> -->
-                    <div class="row p-2" id="alert-container-login">
+                    <div class="row p-2" id="alert-container-verification-code">
                         <?php
                         if (isset($_SESSION['incorrectVerificationCode'])) { ?>
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Incorrect verification code</strong>. Please try again with the new code sent to your email.
+                                <strong>Incorrect verification code</strong>. Please try again.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         <?php
@@ -49,7 +49,8 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
                         <h3 class="login-text">We need to confirm it's really you</h3>
                         <p class="login-text">We sent a one-time verification code to the email address you provided. Please enter the code below to reset your password.</p>
                     </div>
-                    <form action="../../process/reset-password-redirect.php" method="POST">
+                    <form onsubmit="submitVerificationCode(event)" name="verification-code-form">
+                        <!-- <form action="../../process/reset-password-redirect.php" method="POST"> -->
                         <!-- <p class="login-text">We sent a verification code to the email you used to register. Enter the code below to verify your account.</p> -->
                         <input type="text" class="form-control mb-3" name="textFieldVerificationCode" id="textFieldVerificationCode" autofocus>
                         <button class="btn text-white w-100 mb-2 bg-success" type="submit" name="buttonSubmit" id="buttonSubmit">Submit</button>
@@ -63,6 +64,40 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
             </div>
         </div>
     </main>
+
+    <script>
+        var alertVerificationCode = document.getElementById('alert-container-verification-code')
+
+        function submitVerificationCode(event) {
+            event.preventDefault();
+            var loginForm = document.forms.namedItem('verification-code-form');
+            var loginData = new FormData(loginForm)
+            postVerificationCode(loginData).then(data => checkVerificationCodeResponse(JSON.parse(data)));
+        }
+
+        function postVerificationCode(data) {
+            return new Promise((resolve, reject) => {
+                var http = new XMLHttpRequest();
+                http.open("POST", "../../process/reset-password-redirect.php");
+                http.onload = () => http.status == 200 ? resolve(http.response) : reject(Error(http.statusText));
+                http.onerror = (e) => reject(Error(`Networking error: ${e}`));
+                http.send(data)
+            })
+        }
+
+        function checkVerificationCodeResponse(data) {
+            if (data.response === "verification_success") {
+                window.location.href = "../login/reset-password.php";
+            }
+            if (data.response === "empty_fields") {
+                alertVerificationCode.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+            if (data.response === "incorrect_credentials") {
+                alertVerificationCode.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Incorrect verification code!</strong> Please try again.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+            }
+        }
+    </script>
+
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
     <script src="../../../scripts/bootstrap/bootstrap.js"></script>
 </body>
