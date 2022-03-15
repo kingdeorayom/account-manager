@@ -2,20 +2,24 @@
   font-family: "Open Sans", sans-serif;
 }
 
-.no-account {
+.no-account,
+.have-account,
+.forgot-password,
+.resend-verification-code {
   text-decoration: none;
   color: green;
 }
 
-.no-account:hover {
+.no-account:hover,
+.have-account:hover,
+.forgot-password:hover,
+.resend-verification-code:hover {
   text-decoration: underline;
   color: green;
+  cursor: pointer;
 }
 
-.resend-verification-code {
-  color: green;
-}
-.resend-verification-code:hover {
-  cursor: pointer;
-  text-decoration: underline;
+.button-cancel {
+  text-decoration: none;
+  color: white;
 }

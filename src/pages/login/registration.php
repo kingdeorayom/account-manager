@@ -43,7 +43,7 @@
                     </form>
                     <div class="text-center py-2">
                         <hr class="my-4">
-                        <label class="login-text">Already have an account? <a href="../../../index.php" style="text-decoration: none; color: green">Click here to login</a></label>
+                        <label class="login-text">Already have an account? <a href="../../../index.php" class="have-account">Click here to login</a></label>
                     </div>
                 </div>
             </div>
@@ -105,6 +105,7 @@
         }
     </script>
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
+    <script src="../../../scripts/bootstrap/bootstrap.js"></script>
 </body>
 
 </html>

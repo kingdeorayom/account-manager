@@ -81,7 +81,7 @@ if (isset($_SESSION['loggedin'])) {
                         <button class="btn text-white w-100 mt-3 mb-2 bg-success" type="submit" name="buttonLogin" id="buttonLogin">Login</button>
                     </form>
                     <div class="text-center py-2">
-                        <a href="#" style="text-decoration: none; color: darkgreen" class="login-text">I forgot my password</a>
+                        <a href="./src/pages/login/forgot-password.php" class="login-text forgot-password">I forgot my password</a>
                         <hr class="my-4">
                         <label class="login-text">No account yet? <a href="src/pages/login/registration.php" class="no-account">Click here to create</a></label>
                     </div>
