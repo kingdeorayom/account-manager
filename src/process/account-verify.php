@@ -7,6 +7,14 @@ if (!isset($_SESSION['toVerify'])) {
     header("location: ../../index.php");
     exit();
 } else {
+
+    if (empty($_POST['textFieldVerificationCode'])) {
+        $arr = array('response' => "empty_fields");
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+        exit();
+    }
+
     $userInputVerification = $_POST['textFieldVerificationCode'];
     $verificationCode = $_SESSION['verificationCode'];
 
@@ -23,14 +31,20 @@ if (!isset($_SESSION['toVerify'])) {
             unset($_SESSION['password']);
             unset($_SESSION['toVerify']);
 
-            header("location: ../../index.php");
+            $arr = array('response' => "login_success");
+            header('Content-Type: application/json');
+            echo json_encode($arr);
+
+            // header("location: ../../index.php");
         } else {
-            echo 'Could not prepare statement';
+            $arr = array('response' => "incorrect_credentials");
+            header('Content-Type: application/json');
+            echo json_encode($arr);
         }
     } else {
-        $_SESSION['incorrectVerificationCode'] = "Incorrect verification code.";
-        header("location: ../pages/login/account-verification.php");
-        exit();
+        $arr = array('response' => "incorrect_credentials");
+        header('Content-Type: application/json');
+        echo json_encode($arr);
     }
 }
 

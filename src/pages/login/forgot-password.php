@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+
+$pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +14,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset your password</title>
-    <?php include_once '../../includes/google-fonts.php' ?>
+    <?php include_once '../../../assets/fonts/google-fonts.php' ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../styles/bootstrap/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../styles/custom/pages/login-style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo '../../../styles/custom/pages/login-style.css?id=' . $pagecssVersion ?>" type="text/css">
 </head>
 
 <body>
@@ -56,7 +65,11 @@
                     <form action="../../process/forgot-password-email-verify.php" method="POST">
                         <h4 class="login-text">Forgot your password?</h4>
                         <p class="login-text">Enter the email you used to register your account.</p>
-                        <input type="text" class="form-control my-3" name="textFieldEmail" id="textFieldEmail" autofocus>
+                        <input class="form-control my-3" type="text" name="textFieldEmail" id="textFieldEmail" value="<?php if (isset($_SESSION['email'])) {
+                                                                                                                            echo $_SESSION['email'];
+                                                                                                                            unset($_SESSION['email']);
+                                                                                                                        } ?>" autofocus>
+                        <!-- <input type="text" class="form-control my-3" name="textFieldEmail" id="textFieldEmail" autofocus> -->
                         <button class="btn text-white w-100 mb-2 bg-success" type="submit" name="buttonSubmit" id="buttonSubmit">Submit</button>
                         <a href="../../../index.php"><button class="btn text-white w-100 bg-secondary button-cancel" type="button" name="buttonCancel" id="buttonCancel">Cancel</button></a>
                     </form>

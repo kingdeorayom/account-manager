@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+$pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create an account</title>
-    <?php include_once '../../includes/google-fonts.php' ?>
+    <?php include_once '../../../assets/fonts/google-fonts.php' ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../styles/bootstrap/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../styles/custom/pages/login-style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo '../../../styles/custom/pages/login-style.css?id=' . $pagecssVersion ?>" type="text/css">
 </head>
 
 <body>
@@ -36,7 +46,7 @@
                         <label class="login-text my-2">Confirm Password</label>
                         <input type="password" class="form-control mb-3" name="textFieldConfirmPassword" id="textFieldConfirmPassword">
                         <div class="form-check">
-                            <input onclick="showHidePasswordRegistration();" class="form-check-input" type="checkbox" value="" id="checkBoxShowHidePassword">
+                            <input class="form-check-input" type="checkbox" value="" id="checkBoxShowHidePassword">
                             <label class="form-check-label" for="checkBoxShowHidePassword">Show/Hide Password</label>
                         </div>
                         <button class="btn text-white w-100 mt-3 bg-success" type="submit" name="buttonRegister" id="buttonRegister">Register</button>
@@ -50,17 +60,15 @@
         </div>
     </main>
     <script>
-        function showHidePasswordRegistration() {
-            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
-            var textFieldConfirmPasswordInputType = document.getElementById("textFieldConfirmPassword");
-            if (textFieldPasswordInputType.type === "password") {
-                textFieldPasswordInputType.type = "text";
-                textFieldConfirmPasswordInputType.type = "text";
-            } else {
-                textFieldPasswordInputType.type = "password";
-                textFieldConfirmPasswordInputType.type = "password";
-            }
-        }
+        $(document).ready(function() {
+            $("#checkBoxShowHidePassword").change(function() {
+                if ($(this).is(':checked')) {
+                    $("#textFieldPassword, #textFieldConfirmPassword").attr("type", "text");
+                } else {
+                    $("#textFieldPassword, #textFieldConfirmPassword").attr("type", "password");
+                }
+            });
+        });
     </script>
     <script>
         var alertRegister = document.getElementById('alert-container-register');

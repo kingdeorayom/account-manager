@@ -20,6 +20,10 @@ if (!isset($_SESSION['email'])) {
     $recipient = $_SESSION['email'];
     mail($recipient, $subject, $message, 'From: noreply@gmail.com');
 }
+
+$pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
+
+
 ?>
 
 
@@ -31,9 +35,10 @@ if (!isset($_SESSION['email'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify your email</title>
-    <?php include_once '../../includes/google-fonts.php' ?>
+    <?php include_once '../../../assets/fonts/google-fonts.php' ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../styles/bootstrap/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../styles/custom/pages/login-style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo '../../../styles/custom/pages/login-style.css?id=' . $pagecssVersion ?>" type="text/css">
 </head>
 
 <body>

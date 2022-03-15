@@ -2,7 +2,11 @@
 session_start();
 if (isset($_SESSION['loggedin'])) {
     header("Location: src/pages/home.php");
-} ?>
+}
+
+$pagecssVersion = filemtime('styles/custom/pages/login-style.css');
+
+?>
 
 
 <!DOCTYPE html>
@@ -13,9 +17,11 @@ if (isset($_SESSION['loggedin'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Manager</title>
-    <?php include_once 'src/includes/google-fonts.php' ?>
+    <?php include_once './assets/fonts/google-fonts.php' ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles/bootstrap/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="styles/custom/pages/login-style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo 'styles/custom/pages/login-style.css?id=' . $pagecssVersion ?>" type="text/css">
 </head>
 
 <body>
@@ -76,7 +82,7 @@ if (isset($_SESSION['loggedin'])) {
                         <label class="login-text my-1">Password</label>
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" name="textFieldPassword" id="textFieldPassword">
-                            <span onclick="showHidePasswordLogin();" class="input-group-text"><i class="fas fa-eye" id="show_eye"></i><i class="fas fa-eye-slash d-none" id="hide_eye"></i></span>
+                            <span class="input-group-text"><i class="fas fa-eye" id="show_eye"></i><i class="fas fa-eye-slash" id="hide_eye" hidden></i></span>
                         </div>
                         <button class="btn text-white w-100 mt-3 mb-2 bg-success" type="submit" name="buttonLogin" id="buttonLogin">Login</button>
                     </form>
@@ -90,21 +96,18 @@ if (isset($_SESSION['loggedin'])) {
         </div>
     </main>
     <script>
-        function showHidePasswordLogin() {
-            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
-            var show_eye = document.getElementById("show_eye");
-            var hide_eye = document.getElementById("hide_eye");
-            hide_eye.classList.remove("d-none");
-            if (textFieldPasswordInputType.type === "password") {
-                textFieldPasswordInputType.type = "text";
-                show_eye.style.display = "none";
-                hide_eye.style.display = "block";
-            } else {
-                textFieldPasswordInputType.type = "password";
-                show_eye.style.display = "block";
-                hide_eye.style.display = "none";
-            }
-        }
+        $(document).ready(function() {
+            $("#show_eye").click(function() {
+                $("#textFieldPassword").attr("type", "text");
+                $("#show_eye").prop("hidden", true);
+                $("#hide_eye").prop("hidden", false);
+            });
+            $("#hide_eye").click(function() {
+                $("#textFieldPassword").attr("type", "password");
+                $("#show_eye").prop("hidden", false);
+                $("#hide_eye").prop("hidden", true);
+            });
+        });
     </script>
     <script>
         var alertLogin = document.getElementById('alert-container-login')

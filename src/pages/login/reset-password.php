@@ -15,6 +15,9 @@ if (!isset($_SESSION['resetPassword'])) {
     // die('If you are seeing this message, it means you accessed this page outside of the normal process intended by the developers.<br>Please click the link above to return to the login page, or to the homepage if already logged in.');
 }
 
+$pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +28,10 @@ if (!isset($_SESSION['resetPassword'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create an account</title>
-    <?php include_once '../../includes/google-fonts.php' ?>
+    <?php include_once '../../../assets/fonts/google-fonts.php' ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../styles/bootstrap/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../styles/custom/pages/login-style.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo '../../../styles/custom/pages/login-style.css?id=' . $pagecssVersion ?>" type="text/css">
 </head>
 
 <body>

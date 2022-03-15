@@ -26,8 +26,8 @@ if (empty($_POST['textFieldPassword'] && $_POST['textFieldConfirmPassword'])) {
 }
 
 if ($statement = $connection->prepare('UPDATE users SET password = ? WHERE email = ?')) {
-    //$_SESSION['password'] = $_POST['textFieldPassword'];
-    $_SESSION['password'] = password_hash($_POST['textFieldPassword'], PASSWORD_DEFAULT);
+    $_SESSION['password'] = $_POST['textFieldPassword'];
+    // $_SESSION['password'] = password_hash($_POST['textFieldPassword'], PASSWORD_DEFAULT);
     $statement->bind_param('ss', $_SESSION['password'], $_SESSION['email']);
     $statement->execute();
 
