@@ -24,6 +24,9 @@ if (!isset($_SESSION['loggedin'])) {
 </head>
 
 <body>
+
+    <p>if you see this it means u successfully logged in</p>
+
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
     <script src="../../scripts/bootstrap/bootstrap.js"></script>
 </body>

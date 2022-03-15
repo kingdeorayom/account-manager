@@ -34,8 +34,10 @@ if ($statement = $connection->prepare('UPDATE users SET password = ? WHERE email
     $_SESSION['passwordResetSuccessful'] = "Password changed successfully";
 
     unset($_SESSION['email']);
-    unset($_SESSION['toVerify']);
     unset($_SESSION['resetPassword']);
+    unset($_SESSION['verificationCode']);
+    unset($_SESSION['incorrectVerificationCode']);
+    unset($_SESSION['toVerifyPasswordReset']);
 
     header("location: ../../index.php");
 } else {

@@ -58,7 +58,7 @@ if ($statement = $connection->prepare('SELECT user_id, password FROM users WHERE
         $_SESSION['name'] = $_POST['textFieldName'];
         $_SESSION['email'] = $_POST['textFieldEmail'];
         $_SESSION['password'] = $_POST['textFieldPassword'];
-        $_SESSION['toVerify'] = true;
+        $_SESSION['toVerifyAccountCreation'] = true;
 
         // header("location: ../pages/login/account-verification.php");
         $arr = array('response' => "success");

@@ -3,7 +3,7 @@ session_start();
 
 include '../includes/connection.php';
 
-if (!isset($_SESSION['toVerify'])) {
+if (!isset($_SESSION['toVerifyAccountCreation'])) {
     header("location: ../../index.php");
     exit();
 } else {
@@ -29,7 +29,8 @@ if (!isset($_SESSION['toVerify'])) {
             unset($_SESSION['name']);
             unset($_SESSION['email']);
             unset($_SESSION['password']);
-            unset($_SESSION['toVerify']);
+            unset($_SESSION['toVerifyAccountCreation']);
+            unset($_SESSION['verificationCode']);
 
             $arr = array('response' => "login_success");
             header('Content-Type: application/json');

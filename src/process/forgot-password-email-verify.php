@@ -33,7 +33,7 @@ if ($statement = $connection->prepare('SELECT user_id, password FROM users WHERE
 
     if ($statement->num_rows > 0) {
         $_SESSION['email'] = $_POST['textFieldEmail'];
-        $_SESSION['toVerify'] = true;
+        $_SESSION['toVerifyPasswordReset'] = true;
         header("location: ../pages/login/password-reset-email-verification.php");
         exit();
     } else {

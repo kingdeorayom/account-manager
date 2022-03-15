@@ -87,17 +87,15 @@ $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
         </div>
     </main>
     <script>
-        function showHidePasswordReset() {
-            var textFieldPasswordInputType = document.getElementById("textFieldPassword");
-            var textFieldConfirmPasswordInputType = document.getElementById("textFieldConfirmPassword");
-            if (textFieldPasswordInputType.type === "password") {
-                textFieldPasswordInputType.type = "text";
-                textFieldConfirmPasswordInputType.type = "text";
-            } else {
-                textFieldPasswordInputType.type = "password";
-                textFieldConfirmPasswordInputType.type = "password";
-            }
-        }
+        $(document).ready(function() {
+            $("#checkBoxShowHidePassword").change(function() {
+                if ($(this).is(':checked')) {
+                    $("#textFieldPassword, #textFieldConfirmPassword").attr("type", "text");
+                } else {
+                    $("#textFieldPassword, #textFieldConfirmPassword").attr("type", "password");
+                }
+            });
+        });
     </script>
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
     <script src="../../../scripts/bootstrap/bootstrap.js"></script>

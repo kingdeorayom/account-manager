@@ -1,31 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
-    echo '<div style="font-family: arial; padding: 3%; font-size: 30px; text-align: center;">
-    <p style="font-size: 50px; font-weight: bold">Oops!</p>
-    <p>If you are seeing this message, it means you accessed a page outside of the normal process intended by the developers.</p>
-    <p>Please click <a href="../../../index.php">here</a> to return to the login page, or to the homepage if already logged in.</p>
-    <br><br><br>
-    <p style="font-size: 20px; color: grey;">Account Manager</p>
-</div>';
-    die();
-    // echo '<a href="../../../index.php">go back</a><br><br>';
-    // die('If you are seeing this message, it means you accessed this page outside of the normal process intended by the developers.<br>Please click the link above to return to the login page, or to the homepage if already logged in.');
-} else if (isset($_SESSION['email'])) {
-    $verificationCode = uniqid();
-    $_SESSION['verificationCode'] = strtoupper(substr($verificationCode, 7));
-    $subject = '[Account Manager] Verification Code';
-    $message =  'Hi, ' . "\n\n" . 'A password reset attempt using this email address ' . $_SESSION['email'] . ' was made and requires further verification.' . "\n" . 'To complete the password reset process, enter the verification code given below:' . "\n\n" . 'Verification code: ' . $_SESSION['verificationCode'] . "\n\n" . 'If it wasn\'t you who attempted to reset the password of the account this email is linked to, kindly disregard this message. The password reset process will be cancelled and the email will not be used.' . "\n\n" . 'Thanks,' . "\n" . 'The SALIKSIK: UPHSL Research Repository Team' . "\n\n" . 'This is a system generated message. Do not reply.';
-    $recipient = $_SESSION['email'];
-    mail($recipient, $subject, $message, 'From: noreply@gmail.com');
-}
+include '../../process/sendmail.php';
 
 $pagecssVersion = filemtime('../../../styles/custom/pages/login-style.css');
 
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
