@@ -26,6 +26,7 @@ body {
 .navLinkSettings {
   cursor: pointer;
 }
+
 /* 
 .navLinkRecords {
   cursor: pointer;
@@ -112,3 +113,17 @@ body {
 .navLinkSettings:hover::before {
   transform: scaleX(1);
 } */
+
+/* table {
+  font-size: 14px;
+} */
+
+/* @media (max-width: 400px) {
+  .table {
+    font-size: 14px !important;
+  }
+} */
+
+td {
+  cursor: pointer;
+}

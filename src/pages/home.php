@@ -6,6 +6,11 @@ if (!isset($_SESSION['loggedin'])) {
     header('location: ../../index.php');
 }
 
+include '../includes/connection.php';
+
+$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'];
+$result = $connection->query($sql);
+
 $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
 ?>
@@ -53,8 +58,8 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
                 <h2>All Records</h2>
 
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered my-4">
-                        <thead>
+                    <table class="table table-sm table-bordered table-hover text-center my-4" id="recordTable">
+                        <thead class="table-light">
                             <tr>
                                 <th scope="col">Account Owner</th>
                                 <th scope="col">Service Name</th>
@@ -67,36 +72,19 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                            </tr>
-                            <tr>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                            </tr>
-                            <tr>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                                <td>Ewan</td>
-                            </tr>
+                            <?php
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr id = " . $row["record_id"];
+
+                                    echo "><td>" . $row["account_owner"] . "</td><td>" . $row["service_name"] . "</td><td>" .  $row["username"] . "</td><td>" . $row["email"] . "</td><td>" . $row["password"] . "</td><td>" .  $row["description"] . "</td><td>" . $row["date_added"] . "</td><td>" . $row["date_modified"] . "</td></tr>";
+                                }
+                            } else {
+                                echo '<tr><td colspan="8">No records saved yet!</td></tr>';
+                            }
+                            $connection->close();
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -134,7 +122,7 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
                                     <input type="text" class="form-control" name="textFieldPasswordRecords" id="textFieldPasswordRecords" required>
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
-                                    <label class="form-label">Description</label>
+                                    <label class="form-label">Description <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great descriptions are clear and concise."></i></label>
                                     <input type="text" class="form-control" name="textFieldDescription" id="textFieldDescription">
                                 </div>
                                 <div class="col-sm-12 my-4">
@@ -164,6 +152,20 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
 
     <script>
+        var table = document.getElementById('recordTable');
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function() {
+                document.getElementById("textFieldAccountOwner").value = this.cells[0].innerHTML;
+                document.getElementById("textFieldServiceName").value = this.cells[1].innerHTML;
+                document.getElementById("textFieldUsername").value = this.cells[2].innerHTML;
+                document.getElementById("textFieldEmailRecords").value = this.cells[3].innerHTML;
+                document.getElementById("textFieldPasswordRecords").value = this.cells[4].innerHTML;
+                document.getElementById("textFieldDescription").value = this.cells[5].innerHTML;
+            };
+        }
+    </script>
+
+    <script>
         var alertAddRecord = document.getElementById('alert-container-add-record');
 
         function submitAddForm(event) {
@@ -187,6 +189,7 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
             if (data.response === "success") {
                 alertAddRecord.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Record added successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
                 $("#textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
+                // $(".table").load(location.href + " .table");
             }
             if (data.response === "empty_fields") {
                 alertAddRecord.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the required fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
@@ -247,7 +250,14 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
     </script>
 
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
+    <script src="../../scripts/popper/popper.min.js"></script>
     <script src="../../scripts/bootstrap/bootstrap.js"></script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
 </body>
 
 </html>
