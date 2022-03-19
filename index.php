@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['loggedin'])) {
-    header("Location: src/pages/home.php");
+    header("Location: ./src/pages/home.php");
 }
 
 $pagecssVersion = filemtime('styles/custom/pages/login-style.css');

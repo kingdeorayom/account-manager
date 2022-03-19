@@ -8,10 +8,12 @@ if (!isset($_SESSION['loggedin'])) {
 
 include '../includes/connection.php';
 
-$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'];
+$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'] . " ORDER BY date_added DESC LIMIT 4";
 $result = $connection->query($sql);
 
 $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
+$pagePanelJSVersion = filemtime('../../scripts/custom/panels.js');
+$pageaddFormJSVersion = filemtime('../../scripts/custom/addForm.js');
 
 ?>
 
@@ -24,6 +26,7 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Manager</title>
     <?php include_once '../../assets/fonts/google-fonts.php' ?>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../styles/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="<?php echo '../../styles/custom/pages/home-style.css?id=' . $pagecssVersion ?>" type="text/css">
@@ -42,82 +45,75 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
         <div class="row my-5">
             <div class="col-4 navLinkRecords text-center py-2">
-                <label id="navLinkRecords" class="py-1">Records</label>
+                <label id="navLinkRecords" class="py-1 fw-bold">Records</label>
             </div>
             <div class="col-4 navLinkAccount text-center py-2">
-                <label id="navLinkAccount" class="py-1">Account</label>
+                <label id="navLinkAccount" class="py-1 fw-bold">Account</label>
             </div>
             <div class="col-4 navLinkSettings text-center py-2">
-                <label id="navLinkSettings" class="py-1">Settings</label>
+                <label id="navLinkSettings" class="py-1 fw-bold">Settings</label>
             </div>
         </div>
 
         <div class="row my-5">
-
             <div id="recordsPanel">
 
-                <h2>All Records</h2>
-
-                <div class="row records my-5">
+                <div class="row records">
+                    <h2 class="mb-4">Recently Added</h2>
                     <?php
-
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
 
                             echo '<div class="col d-flex justify-content-center my-2">
-                                    <a href="#" class="card-link">
-                                        <div class="card" style="width: 18rem;">
-                                            <div class="card-body">
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
                                             <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
                                             <hr>
                                             <ul>
                                                 <li class="fw-bold">Account Owner: </li>
-                                                <li> ' . $row['account_owner'] . '</li>
-                                                <li class="fw-bold">Service Name: </li>
-                                                <li> ' . $row['service_name'] . '</li>
+                                                <li>' . $row['account_owner'] . '</li>
                                                 <li class="fw-bold">Date Added: </li>
-                                                <li> ' . $row['date_added'] . '</li>
-                                                <li class="fw-bold">Date Modified: </li>
-                                                <li> ' . $row['date_modified'] . '</li>
+                                                <li>' . $row['date_added'] . '</li>
                                             </ul>
                                             <hr>
-                                            <button class="btn btn-success w-100 my-2">View</button>
+                                            <div class="row text-center">
+                                                <div class="col">
+                                                    <i class="fas fa-edit text-secondary h5"></i> Edit
+                                                </div>
+                                                <div class="col">
+                                                    <i class="fas fa-trash-alt text-danger h5"></i> Delete
+                                                </div>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>';
                         }
                     } else {
                         echo '<h3 class="my-4 text-center text-secondary">No records saved yet.</h3>';
-                    }
+                    } //<a href="./record.php?id=' . $row['record_id'] . '"><button class="btn btn-success w-100 my-2">View record</button></a>
                     $connection->close();
                     ?>
+                    <div class="text-end">
+                        <a href="./view.php"><button class="btn btn-link my-2 see-all">See all</button></a>
+                    </div>
                 </div>
 
-
-                <div class="my-2" id="addNewRecordPanel">
-
-                    <h2 class="my-3">Add a record</h2>
-
+                <div id="addNewRecordPanel" class="my-3">
+                    <h2>Add a new record</h2>
                     <div class="row py-2" id="alert-container-add-record">
                         <!--  -->
                     </div>
-
                     <div class="addForm">
                         <form onsubmit="submitAddForm(event)" name="add-form">
                             <!-- <form action="../process/add-record.php" method="POST"> -->
                             <div class="row">
-                                <div class="col-sm-12 my-1">
+                                <div class="col-sm-12 col-md-6 my-1">
                                     <label class="form-label">Title <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great titles are clear and concise."></i> <span class="badge bg-danger">Required</span></label>
                                     <input type="text" class="form-control" name="textFieldTitle" id="textFieldTitle" required>
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
-                                    <label class="form-label">Account Owner</label>
-                                    <input type="text" class="form-control" name="textFieldAccountOwner" id="textFieldAccountOwner">
-                                </div>
-                                <div class="col-sm-12 col-md-6 my-1">
-                                    <label class="form-label">Service Name</label>
-                                    <input type="text" class="form-control" name="textFieldServiceName" id="textFieldServiceName">
+                                    <label class="form-label">Account Owner <span class="badge bg-danger">Required</span></label>
+                                    <input type="text" class="form-control" name="textFieldAccountOwner" id="textFieldAccountOwner" required>
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
                                     <label class="form-label">Username</label>
@@ -144,121 +140,25 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
                             </div>
                         </form>
                     </div>
-
                 </div>
-
             </div>
-
             <div id="accountPanel" hidden>
-                <h2>Account</h2>
+                <h2>Account Details</h2>
             </div>
             <div id="settingsPanel" hidden>
                 <h2>Settings</h2>
                 <button class="btn btn-link"><a href="../process/logout.php">Log out</a></button>
             </div>
         </div>
-
     </main>
 
-    <script>
-        var alertAddRecord = document.getElementById('alert-container-add-record');
-
-        function submitAddForm(event) {
-            event.preventDefault();
-            var addForm = document.forms.namedItem('add-form');
-            var addRecord = new FormData(addForm);
-            postAddRecord(addRecord).then(data => checkResponseAddRecord(JSON.parse(data)))
-        }
-
-        function postAddRecord(data) {
-            return new Promise((resolve, reject) => {
-                var http = new XMLHttpRequest();
-                http.open("POST", "../process/add-record.php");
-                http.onload = () => http.status == 200 ? resolve(http.response) : reject(Error(http.statusText));
-                http.onerror = (e) => reject(Error(`Networking error: ${e}`));
-                http.send(data)
-            })
-        }
-
-        function checkResponseAddRecord(data) {
-            if (data.response === "success") {
-                Swal.fire(
-                    'Record saved successfully!',
-                    'You may edit your record for any input mistake.',
-                    'success'
-                )
-                // alertAddRecord.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Record added successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
-                $("#textFieldTitle, #textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
-                $(".records").load(location.href + " .records");
-            }
-            if (data.response === "empty_fields") {
-                alertAddRecord.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the required fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
-            }
-        }
-    </script>
-
-    <script>
-        $(document).ready(function() {
-
-            /* on load */
-            $(".navLinkRecords").css({
-                "border-bottom": "3px solid green",
-            });
-            /* on load */
-
-            $("#navLinkRecords, .navLinkRecords").click(function() {
-                $("#recordsPanel").prop("hidden", false);
-                $("#accountPanel, #settingsPanel").prop("hidden", true);
-
-                $(".navLinkRecords").css({
-                    "border-bottom": "3px solid green",
-                });
-                $(".navLinkAccount, .navLinkSettings").css({
-                    "border-bottom": "3px none green",
-                });
-            });
-
-            $("#navLinkAccount, .navLinkAccount").click(function() {
-                $("#accountPanel").prop("hidden", false);
-                $("#recordsPanel, #settingsPanel").prop("hidden", true);
-
-                $(".navLinkAccount").css({
-                    "border-bottom": "3px solid green",
-                });
-                $(".navLinkRecords, .navLinkSettings").css({
-                    "border-bottom": "3px none green",
-                });
-            });
-
-            $("#navLinkSettings, .navLinkSettings").click(function() {
-                $("#settingsPanel").prop("hidden", false);
-                $("#accountPanel, #recordsPanel").prop("hidden", true);
-
-                $(".navLinkSettings").css({
-                    "border-bottom": "3px solid green",
-                });
-                $(".navLinkRecords, .navLinkAccount").css({
-                    "border-bottom": "3px none green",
-                });
-            });
-
-            $("#buttonClearEntries").click(function() {
-                $("#textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
-            });
-
-        });
-    </script>
-
+    <script src="<?php echo '../../scripts/custom/addForm.js?id=' . $pageaddFormJSVersion ?>"></script>
+    <script src="<?php echo '../../scripts/custom/panels.js?id=' . $pagePanelJSVersion ?>"></script>
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
     <script src="../../plugins/sweetalert2/package/dist/sweetalert2.js"></script>
     <script src="../../scripts/popper/popper.min.js"></script>
     <script src="../../scripts/bootstrap/bootstrap.js"></script>
-    <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    </script>
+    <script src="../../scripts/custom/tooltip.js"></script>
 </body>
 
 </html>

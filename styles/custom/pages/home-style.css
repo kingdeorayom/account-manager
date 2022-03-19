@@ -2,10 +2,6 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-.navbar {
-  background-color: whitesmoke;
-}
-
 .navbar-brand,
 .nav-link {
   color: brown;
@@ -124,17 +120,6 @@ body {
   }
 } */
 
-.card:hover {
-  background-color: gainsboro;
-  color: black;
-  cursor: pointer;
-}
-
-.card-link {
-  color: black;
-  text-decoration: none;
-}
-
 li {
   list-style-type: none;
 }
@@ -142,4 +127,13 @@ li {
 ul {
   margin: 0;
   padding: 0;
+}
+
+.see-all {
+  text-decoration: none;
+  color: green;
+}
+.see-all:hover {
+  text-decoration: underline;
+  color: green;
 }
