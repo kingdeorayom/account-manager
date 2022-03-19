@@ -124,6 +124,22 @@ body {
   }
 } */
 
-td {
+.card:hover {
+  background-color: gainsboro;
+  color: black;
   cursor: pointer;
+}
+
+.card-link {
+  color: black;
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }

@@ -27,6 +27,7 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../styles/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="<?php echo '../../styles/custom/pages/home-style.css?id=' . $pagecssVersion ?>" type="text/css">
+    <link rel="stylesheet" href="../../plugins/sweetalert2/package/dist/sweetalert2.css">
 
 </head>
 
@@ -57,41 +58,52 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
                 <h2>All Records</h2>
 
-                <div class="table-responsive">
-                    <table class="table table-sm table-bordered table-hover text-center my-4" id="recordTable">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Account Owner</th>
-                                <th scope="col">Service Name</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Password</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Date Added</th>
-                                <th scope="col">Date Modified</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                <div class="row records my-5">
+                    <?php
 
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr id = " . $row["record_id"];
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
 
-                                    echo "><td>" . $row["account_owner"] . "</td><td>" . $row["service_name"] . "</td><td>" .  $row["username"] . "</td><td>" . $row["email"] . "</td><td>" . $row["password"] . "</td><td>" .  $row["description"] . "</td><td>" . $row["date_added"] . "</td><td>" . $row["date_modified"] . "</td></tr>";
-                                }
-                            } else {
-                                echo '<tr><td colspan="8">No records saved yet!</td></tr>';
-                            }
-                            $connection->close();
-                            ?>
-                        </tbody>
-                    </table>
+                            echo '<div class="col d-flex justify-content-center my-2">
+                                    <a href="#" class="card-link">
+                                        <div class="card" style="width: 18rem;" id="' . $row['record_id'] . '">
+                                            <div class="card-body">
+                                            <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
+                                            <hr>
+                                            <ul>
+                                                <li class="fw-bold">Account Owner: </li>
+                                                <li> ' . $row['account_owner'] . '</li>
+                                                <li class="fw-bold">Service Name: </li>
+                                                <li> ' . $row['service_name'] . '</li>
+                                                <li class="fw-bold">Username: </li>
+                                                <li> ' . $row['username'] . '</li>
+                                                <li class="fw-bold">Email</li>
+                                                <li> ' . $row['email'] . '</li>
+                                                <li class="fw-bold">Password: </li>
+                                                <li> ' . $row['password'] . '</li>
+                                                <li class="fw-bold">Description: </li>
+                                                <li> ' . $row['description'] . '</li>
+                                                <li class="fw-bold">Date Added: </li>
+                                                <li> ' . $row['date_added'] . '</li>
+                                                <li class="fw-bold">Date Modified: </li>
+                                                <li> ' . $row['date_modified'] . '</li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>';
+                        }
+                    } else {
+                        echo '<h3 class="my-4 text-center text-secondary">No records saved yet.</h3>';
+                    }
+                    $connection->close();
+                    ?>
                 </div>
 
-                <div class="my-4" id="addNewRecordPanel">
 
-                    <h2 class="my-3">Add or edit a record</h2>
+                <div class="my-2" id="addNewRecordPanel">
+
+                    <h2 class="my-3">Add a record</h2>
 
                     <div class="row py-2" id="alert-container-add-record">
                         <!--  -->
@@ -101,6 +113,10 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
                         <form onsubmit="submitAddForm(event)" name="add-form">
                             <!-- <form action="../process/add-record.php" method="POST"> -->
                             <div class="row">
+                                <div class="col-sm-12 my-1">
+                                    <label class="form-label">Title <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great titles are clear and concise."></i> <span class="badge bg-danger">Required</span></label>
+                                    <input type="text" class="form-control" name="textFieldTitle" id="textFieldTitle" required>
+                                </div>
                                 <div class="col-sm-12 col-md-6 my-1">
                                     <label class="form-label">Account Owner</label>
                                     <input type="text" class="form-control" name="textFieldAccountOwner" id="textFieldAccountOwner">
@@ -150,21 +166,6 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
     </main>
 
-
-    <script>
-        var table = document.getElementById('recordTable');
-        for (var i = 1; i < table.rows.length; i++) {
-            table.rows[i].onclick = function() {
-                document.getElementById("textFieldAccountOwner").value = this.cells[0].innerHTML;
-                document.getElementById("textFieldServiceName").value = this.cells[1].innerHTML;
-                document.getElementById("textFieldUsername").value = this.cells[2].innerHTML;
-                document.getElementById("textFieldEmailRecords").value = this.cells[3].innerHTML;
-                document.getElementById("textFieldPasswordRecords").value = this.cells[4].innerHTML;
-                document.getElementById("textFieldDescription").value = this.cells[5].innerHTML;
-            };
-        }
-    </script>
-
     <script>
         var alertAddRecord = document.getElementById('alert-container-add-record');
 
@@ -187,9 +188,14 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
         function checkResponseAddRecord(data) {
             if (data.response === "success") {
-                alertAddRecord.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Record added successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
-                $("#textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
-                // $(".table").load(location.href + " .table");
+                Swal.fire(
+                    'Record saved successfully!',
+                    'You may edit your record for any input mistake.',
+                    'success'
+                )
+                // alertAddRecord.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Record added successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+                $("#textFieldTitle, #textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
+                $(".records").load(location.href + " .records");
             }
             if (data.response === "empty_fields") {
                 alertAddRecord.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the required fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
@@ -250,6 +256,7 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
     </script>
 
     <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
+    <script src="../../plugins/sweetalert2/package/dist/sweetalert2.js"></script>
     <script src="../../scripts/popper/popper.min.js"></script>
     <script src="../../scripts/bootstrap/bootstrap.js"></script>
     <script>
