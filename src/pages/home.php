@@ -66,7 +66,7 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
 
                             echo '<div class="col d-flex justify-content-center my-2">
                                     <a href="#" class="card-link">
-                                        <div class="card" style="width: 18rem;" id="' . $row['record_id'] . '">
+                                        <div class="card" style="width: 18rem;">
                                             <div class="card-body">
                                             <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
                                             <hr>
@@ -75,19 +75,13 @@ $pagecssVersion = filemtime('../../styles/custom/pages/home-style.css');
                                                 <li> ' . $row['account_owner'] . '</li>
                                                 <li class="fw-bold">Service Name: </li>
                                                 <li> ' . $row['service_name'] . '</li>
-                                                <li class="fw-bold">Username: </li>
-                                                <li> ' . $row['username'] . '</li>
-                                                <li class="fw-bold">Email</li>
-                                                <li> ' . $row['email'] . '</li>
-                                                <li class="fw-bold">Password: </li>
-                                                <li> ' . $row['password'] . '</li>
-                                                <li class="fw-bold">Description: </li>
-                                                <li> ' . $row['description'] . '</li>
                                                 <li class="fw-bold">Date Added: </li>
                                                 <li> ' . $row['date_added'] . '</li>
                                                 <li class="fw-bold">Date Modified: </li>
                                                 <li> ' . $row['date_modified'] . '</li>
                                             </ul>
+                                            <hr>
+                                            <button class="btn btn-success w-100 my-2">View</button>
                                             </div>
                                         </div>
                                     </a>
