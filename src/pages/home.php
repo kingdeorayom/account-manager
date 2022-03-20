@@ -76,14 +76,6 @@ $pageaddFormJSVersion = filemtime('../../scripts/custom/addForm.js');
                                                 <li>' . $row['date_added'] . '</li>
                                             </ul>
                                             <hr>
-                                            <div class="row text-center">
-                                                <div class="col">
-                                                    <i class="fas fa-edit text-secondary h5"></i> Edit
-                                                </div>
-                                                <div class="col">
-                                                    <i class="fas fa-trash-alt text-danger h5"></i> Delete
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>';
