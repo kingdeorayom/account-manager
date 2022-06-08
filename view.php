@@ -72,7 +72,6 @@ $pagecssVersion = filemtime('./assets/css/view.css');
                                 <li class="fw-bold">Date Modified: </li>
                                 <li>' . $row['date_modified'] . '</li>
                             </ul>
-                            <hr>
                             </div>
                         </div>
                 </div>';

@@ -11,6 +11,9 @@ include './process/connection.php';
 $sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'] . " ORDER BY date_added DESC LIMIT 4";
 $result = $connection->query($sql);
 
+$getName = "SELECT name FROM users WHERE user_id = '1'";
+$getNameResult = $connection->query($getName);
+
 $maincssVersion = filemtime('./assets/css/main.css');
 $pagecssVersion = filemtime('./assets/css/home.css');
 $pagePanelJSVersion = filemtime('./scripts/panels.js');
@@ -43,14 +46,11 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
         </div>
 
         <div class="row my-5">
-            <div class="col-4 navLinkRecords text-center py-2">
+            <div class="col-6 navLinkRecords text-center py-2">
                 <label id="navLinkRecords" class="py-1 fw-bold">Records</label>
             </div>
-            <div class="col-4 navLinkAccount text-center py-2">
+            <div class="col-6 navLinkAccount text-center py-2">
                 <label id="navLinkAccount" class="py-1 fw-bold">Account</label>
-            </div>
-            <div class="col-4 navLinkSettings text-center py-2">
-                <label id="navLinkSettings" class="py-1 fw-bold">Settings</label>
             </div>
         </div>
 
@@ -96,7 +96,6 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                     </div>
                     <div class="addForm">
                         <form onsubmit="submitAddForm(event)" name="add-form">
-                            <!-- <form action="../process/add-record.php" method="POST"> -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 my-1">
                                     <label class="form-label">Title <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great titles are clear and concise."></i> <span class="badge bg-danger">Required</span></label>
@@ -134,12 +133,59 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                 </div>
             </div>
             <div id="accountPanel" hidden>
-                <h2>Account Details</h2>
+
+
+                <div class="accountDetails">
+                    <h2>Account Details</h2>
+                    <div class="row">
+
+                        <div class="col my-1">
+                            <label class="form-label my-1">Name</label>
+                            <input type="text" class="form-control" value="<?php
+
+                                                                            if ($getNameResult->num_rows > 0) {
+                                                                                // output data of each row
+                                                                                while ($row = $getNameResult->fetch_assoc()) {
+                                                                                    echo $row["name"];
+                                                                                }
+                                                                            }
+
+                                                                            ?>" disabled>
+                            <label class="form-label my-1">Email Address</label>
+                            <input type="text" class="form-control" value="<?php echo $_SESSION['email'] ?>" disabled>
+                        </div>
+                        <div class="col-sm-12 my-4">
+                            <div class="text-end">
+                                <a href="./process/logout.php" class="button-logout text-danger">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accountPreferenceForm my-3">
+                    <h2>Account Preferences</h2>
+                    <form onsubmit="submitAddForm(event)" name="account-preference-form">
+                        <div class="row">
+                            <div class="col my-1">
+                                <label class="form-label my-1">Current Password</label>
+                                <input type="text" class="form-control" name="textFieldCurrentPassword" id="textFieldCurrentPassword" required>
+                                <label class="form-label my-1">New Password</label>
+                                <input type="text" class="form-control" name="textFieldNewPassword" id="textFieldNewPassword" required>
+                            </div>
+                            <div class="col-sm-12 my-4">
+                                <div class="text-end">
+                                    <button class="btn btn-secondary my-1" type="button" id="buttonClearEntries">Clear entries</button>
+                                    <button class="btn btn-success my-1" type="submit">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
             </div>
-            <div id="settingsPanel" hidden>
-                <h2>Settings</h2>
-                <button class="btn btn-link"><a href="./process/logout.php">Log out</a></button>
-            </div>
+
         </div>
     </main>
 

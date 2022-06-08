@@ -31,7 +31,7 @@ if ($statement = $connection->prepare('SELECT user_id, password FROM users WHERE
         if ($_POST['textFieldPassword'] === $password) {
             session_regenerate_id();
             $_SESSION['loggedin'] = TRUE;
-            $_SESSION['name'] = $_POST['textFieldEmail'];
+            $_SESSION['email'] = $_POST['textFieldEmail'];
             $_SESSION['id'] = $id;
 
             // header('location: ../pages/home.php');
