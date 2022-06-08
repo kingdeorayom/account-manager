@@ -1,0 +1,18 @@
+li {
+  list-style-type: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.go-back {
+  text-decoration: none;
+  color: green;
+}
+
+.go-back:hover {
+  text-decoration: underline;
+  color: green;
+}

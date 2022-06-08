@@ -1,13 +1,15 @@
 <?php
+
 session_start();
+
 if (isset($_SESSION['loggedin'])) {
-    header("Location: ./src/pages/home.php");
+    header("Location: ./home.php");
 }
 
-$pagecssVersion = filemtime('styles/custom/pages/login-style.css');
+$maincssVersion = filemtime('./assets/css/main.css');
+$pagecssVersion = filemtime('./assets/css/login.css');
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,16 +19,16 @@ $pagecssVersion = filemtime('styles/custom/pages/login-style.css');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Manager</title>
-    <?php include_once './assets/fonts/google-fonts.php' ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="styles/bootstrap/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="styles/custom/pages/login-style.css" type="text/css">
-    <link rel="stylesheet" href="<?php echo 'styles/custom/pages/login-style.css?id=' . $pagecssVersion ?>" type="text/css">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="<?php echo './assets/css/main.css?v=' . $maincssVersion ?>" type="text/css">
+    <link rel="stylesheet" href="<?php echo './assets/css/login.css?v=' . $pagecssVersion ?>" type="text/css">
 </head>
 
 <body>
 
     <!--Main Section-->
+
     <main class="main">
         <div class="container">
             <div class="row mx-auto">
@@ -87,14 +89,15 @@ $pagecssVersion = filemtime('styles/custom/pages/login-style.css');
                         <button class="btn text-white w-100 mt-3 mb-2 bg-success" type="submit" name="buttonLogin" id="buttonLogin">Login</button>
                     </form>
                     <div class="text-center py-2">
-                        <a href="./src/pages/login/forgot-password.php" class="login-text forgot-password">I forgot my password</a>
+                        <a href="./login/forgot-password.php" class="login-text forgot-password">I forgot my password</a>
                         <hr class="my-4">
-                        <label class="login-text">No account yet? <a href="src/pages/login/registration.php" class="no-account">Click here to create</a></label>
+                        <label class="login-text">No account yet? <a href="./login/registration.php" class="no-account">Click here to create</a></label>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
     <script>
         $(document).ready(function() {
             $("#show_eye").click(function() {
@@ -122,7 +125,7 @@ $pagecssVersion = filemtime('styles/custom/pages/login-style.css');
         function postLogin(data) {
             return new Promise((resolve, reject) => {
                 var http = new XMLHttpRequest();
-                http.open("POST", "./src/process/login.php");
+                http.open("POST", "./process/login.php");
                 http.onload = () => http.status == 200 ? resolve(http.response) : reject(Error(http.statusText));
                 http.onerror = (e) => reject(Error(`Networking error: ${e}`));
                 http.send(data)
@@ -143,8 +146,8 @@ $pagecssVersion = filemtime('styles/custom/pages/login-style.css');
             }
         }
     </script>
-    <script src="https://kit.fontawesome.com/dab8986b00.js" crossorigin="anonymous"></script>
-    <script src="./scripts/bootstrap/bootstrap.js"></script>
+    <script src="./node_modules/fontawesome/fontawesome.js" crossorigin="anonymous"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
