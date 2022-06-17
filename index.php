@@ -127,7 +127,7 @@ $pagecssVersion = filemtime('./assets/css/login.css');
                 <a href="https://www.github.com/kingdeorayom" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="GitHub"><i class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/serking-de-orayom-599927218/" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="copyright">Serking de Orayom © 2022</p>
+            <p class="copyright">Made with <span class="text-danger">&#10084;</span> by Serking de Orayom © 2022</p>
         </footer>
 
     </main>
