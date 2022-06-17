@@ -1,5 +1,3 @@
-var alertDeleteRecord = document.getElementById('alert-container-delete-record');
-
 function submitDeleteForm(event) {
     event.preventDefault();
     var deleteForm = document.forms.namedItem('delete-form');

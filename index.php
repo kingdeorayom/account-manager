@@ -19,10 +19,28 @@ $pagecssVersion = filemtime('./assets/css/login.css');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Manager</title>
+    <link rel="stylesheet" href="./node_modules/animate.css/animate.min.css">
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo './assets/css/main.css?v=' . $maincssVersion ?>" type="text/css">
     <link rel="stylesheet" href="<?php echo './assets/css/login.css?v=' . $pagecssVersion ?>" type="text/css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:image" content="./assets/img/key-icon.png" />
+    <meta name="keywords" content="account manager, accountmanager, serking de orayom, serking">
+    <meta property="og:description" content="A web-based application to store and manage your accounts all in one place." />
+    <meta property="og:url" content="https://account-manager.online" />
+    <meta property="og:title" content="Account Manager" />
+
 </head>
 
 <body>
@@ -96,7 +114,24 @@ $pagecssVersion = filemtime('./assets/css/login.css');
                 </div>
             </div>
         </div>
+
+        <footer class="footer-basic">
+
+            <div class="social">
+
+                <!-- <h6 class="fw-normal">For concerns and inquiries, contact me through:</h6> -->
+
+                <a href="https://www.facebook.com/kingdeorayom" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.twitter.com/kingdeorayom" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/serkingdeorayom" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.github.com/kingdeorayom" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/serking-de-orayom-599927218/" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p class="copyright">Serking de Orayom © 2022</p>
+        </footer>
+
     </main>
+
 
     <script>
         $(document).ready(function() {
@@ -146,8 +181,12 @@ $pagecssVersion = filemtime('./assets/css/login.css');
             }
         }
     </script>
+
     <script src="./node_modules/fontawesome/fontawesome.js" crossorigin="anonymous"></script>
+    <script src="./node_modules/@popperjs/core/dist/umd/popper.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./scripts/tooltip.js"></script>
+
 </body>
 
 </html>

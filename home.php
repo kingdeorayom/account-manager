@@ -18,6 +18,7 @@ $maincssVersion = filemtime('./assets/css/main.css');
 $pagecssVersion = filemtime('./assets/css/home.css');
 $pagePanelJSVersion = filemtime('./scripts/panels.js');
 $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
+$pageUpdatePasswordJSVersion = filemtime('./scripts/updatePassword.js');
 
 ?>
 
@@ -33,6 +34,14 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo './assets/css/home.css?v=' . $pagecssVersion ?>" type="text/css">
     <link rel="stylesheet" href="./node_modules/sweetalert2/dist/sweetalert2.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
 </head>
 
@@ -150,7 +159,7 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                     <div class="row">
 
                         <div class="col my-1">
-                            <label class="form-label my-1">Name</label>
+                            <label class="form-label my-1">Name <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="For security reasons, you cannot change your name and email address."></i></label>
                             <input type="text" class="form-control" value="<?php
 
                                                                             if ($getNameResult->num_rows > 0) {
@@ -161,7 +170,7 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                                                                             }
 
                                                                             ?>" disabled>
-                            <label class="form-label my-1">Email Address</label>
+                            <label class="form-label my-1">Email Address <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="For security reasons, you cannot change your name and email address."></i></label>
                             <input type="text" class="form-control" value="<?php echo $_SESSION['email'] ?>" disabled>
                         </div>
                         <div class="col-sm-12 my-4">
@@ -174,17 +183,26 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
 
                 <div class="accountPreferenceForm my-3">
                     <h2>Account Preferences</h2>
-                    <form onsubmit="submitAddForm(event)" name="account-preference-form">
+                    <form onsubmit="submitUpdatePasswordForm(event)" name="update-password-form">
                         <div class="row">
+
+                            <div class="row py-2" id="alert-container-update-password">
+                                <!--  -->
+                            </div>
+
                             <div class="col my-1">
                                 <label class="form-label my-1">Current Password</label>
-                                <input type="text" class="form-control" name="textFieldCurrentPassword" id="textFieldCurrentPassword" required>
+                                <input type="password" class="form-control" name="textFieldCurrentPassword" id="textFieldCurrentPassword" required>
                                 <label class="form-label my-1">New Password</label>
-                                <input type="text" class="form-control" name="textFieldNewPassword" id="textFieldNewPassword" required>
+                                <input type="password" class="form-control" name="textFieldNewPassword" id="textFieldNewPassword" required>
+                                <div class="form-check my-3">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkBoxShowPassword">
+                                    <label class="form-check-label" for="checkBoxShowPassword">Show password</label>
+                                </div>
                             </div>
                             <div class="col-sm-12 my-4">
                                 <div class="text-end">
-                                    <button class="btn btn-secondary my-1" type="button" id="buttonClearEntries">Clear entries</button>
+                                    <button class="btn btn-secondary my-1" type="button" id="buttonClearEntriesPassword">Clear entries</button>
                                     <button class="btn btn-success my-1" type="submit">Save Changes</button>
                                 </div>
                             </div>
@@ -200,6 +218,7 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
 
     <script src="<?php echo './scripts/addForm.js?v=' . $pageaddFormJSVersion ?>"></script>
     <script src="<?php echo './scripts/panels.js?v=' . $pagePanelJSVersion ?>"></script>
+    <script src="<?php echo './scripts/updatePassword.js?v=' . $pageUpdatePasswordJSVersion ?>"></script>
     <script src="./node_modules/fontawesome/fontawesome.js" crossorigin="anonymous"></script>
     <script src="./node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="./node_modules/@popperjs/core/dist/umd/popper.js"></script>

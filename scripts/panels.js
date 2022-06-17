@@ -34,4 +34,17 @@ $(document).ready(function() {
         $("#textFieldTitle, #textFieldAccountOwner, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
     });
 
+    $("#buttonClearEntriesPassword").click(function() {
+        $("#textFieldCurrentPassword, #textFieldNewPassword").val("");
+    });
+
+    $("#checkBoxShowPassword").change(function() {
+        if ($(this).is(':checked')) {
+            $("#textFieldCurrentPassword").attr("type", "text");
+            $("#textFieldNewPassword").attr("type", "text");
+        } else {
+            $("#textFieldCurrentPassword").attr("type", "password");
+            $("#textFieldNewPassword").attr("type", "password");
+        }
+    });
 });
