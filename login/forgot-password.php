@@ -36,11 +36,11 @@ $pagecssVersion = filemtime('../assets/css/login.css');
         <div class="container">
             <div class="row mx-auto">
                 <div class="col-sm-12 col-md-9 col-lg-5 mx-auto p-5">
-                    <div class="row py-2 text-center">
+                    <!-- <div class="row py-2 text-center">
                         <i class="fas fa-key text-warning fa-2x mb-2"></i>
                         <h3 class="login-text">Account Manager</h3>
                         <p class="login-text">Store and manage your accounts—all in one place</p>
-                    </div>
+                    </div> -->
                     <div class="row p-2" id="alert-container-login">
                         <?php
                         if (isset($_SESSION['emptyInput'])) { ?>
