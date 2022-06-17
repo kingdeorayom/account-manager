@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 include './process/connection.php';
 
-$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'];
+$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'] . " ORDER BY record_id DESC";
 $result = $connection->query($sql);
 
 $maincssVersion = filemtime('./assets/css/main.css');
@@ -46,32 +46,44 @@ $pagecssVersion = filemtime('./assets/css/view.css');
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
 
-                            echo '<div class="col d-flex justify-content-center my-2">
-                        <div class="card" style="width: 18rem;">
+                            echo '<div class="col-sm-12 col-md-6 d-flex justify-content-center my-2">
+                        <div class="card" style="width: 100%;">
                             <div class="card-body">
-                            <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
-                            <hr>
-                            <ul>
-                                <li class="fw-bold">Account Owner: </li>
-                                <li>' . $row['account_owner'] . '</li>
 
-                                <li class="fw-bold">Username: </li>
-                                <li>' . $row['username'] . '</li>
+                            <div class="row">
+                            
+                                <div class="col d-flex align-items-center">
+                                    <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
+                                </div>
+                                <div class="col text-end">
+                                <a href="./record.php?id=' . $row['record_id'] . '"><button class="btn btn-link text-secondary edit">Edit</button></a>
+                                </div>
 
-                                <li class="fw-bold">Email: </li>
-                                <li>' . $row['email'] . '</li>
+                            </div>
 
-                                <li class="fw-bold">Password: </li>
-                                <li>' . $row['password'] . '</li>
+                                <hr>
+                                <ul>
+                                    <li class="fw-bold">Account Owner: </li>
+                                    <li>' . $row['account_owner'] . '</li>
 
-                                <li class="fw-bold">Description: </li>
-                                <li>' . $row['description'] . '</li>
+                                    <li class="fw-bold">Username: </li>
+                                    <li>' . $row['username'] . '</li>
 
-                                <li class="fw-bold">Date Added: </li>
-                                <li>' . $row['date_added'] . '</li>
-                                <li class="fw-bold">Date Modified: </li>
-                                <li>' . $row['date_modified'] . '</li>
-                            </ul>
+                                    <li class="fw-bold">Email: </li>
+                                    <li>' . $row['email'] . '</li>
+
+                                    <li class="fw-bold">Password: </li>
+                                    <li>' . $row['password'] . '</li>
+
+                                    <li class="fw-bold">Description: </li>
+                                    <li>' . $row['description'] . '</li>
+
+                                    <li class="fw-bold">Date Added: </li>
+                                    <li>' . $row['date_added'] . '</li>
+                                    <li class="fw-bold">Date Modified: </li>
+                                    <li>' . $row['date_modified'] . '</li>
+                                </ul>
+
                             </div>
                         </div>
                 </div>';

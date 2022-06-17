@@ -19,15 +19,18 @@ function postAddRecord(data) {
 
 function checkResponseAddRecord(data) {
     if (data.response === "success") {
-        // Swal.fire(
-        //     'Record saved successfully!',
-        //     'You may edit your record for any input mistake.',
-        //     'success'
-        // )
-        alertAddRecord.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Record added successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
         
-        $("#textFieldTitle, #textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
-        $(".records").load(location.href + " .records");
+        Swal.fire(
+            'Record saved successfully!',
+            'You may edit your record for any input mistake.',
+            'success'
+        ).then(function() {
+            location.reload();
+        })
+        
+        //alertAddRecord.innerHTML = `<div class="alert alert-success alert-dismissible fade show" role="alert">Record added successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
+        
+        //$("#textFieldTitle, #textFieldAccountOwner, #textFieldServiceName, #textFieldUsername, #textFieldEmailRecords, #textFieldPasswordRecords, #textFieldDescription").val("");
     }
     if (data.response === "empty_fields") {
         alertAddRecord.innerHTML = `<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Invalid input!</strong> Please fill up all the required fields.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`

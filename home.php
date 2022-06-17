@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 include './process/connection.php';
 
-$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'] . " ORDER BY date_added DESC LIMIT 4";
+$sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'] . " ORDER BY record_id DESC LIMIT 4";
 $result = $connection->query($sql);
 
 $getName = "SELECT name FROM users WHERE user_id = '1'";
@@ -66,15 +66,25 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                             echo '<div class="col d-flex justify-content-center my-2">
                                     <div class="card" style="width: 18rem;">
                                         <div class="card-body">
-                                            <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
+
+                                        <div class="row">
+                                            <div class="col d-flex align-items-center">
+                                                <h5 class="card-title fw-bold">' . $row['record_title'] . '</h5>
+                                            </div>
+                                            <div class="col text-end">
+                                                <a href="./record.php?id=' . $row['record_id'] . '"><button class="btn btn-link text-secondary edit">Edit</button></a>
+                                            </div>
+                                        </div>
+                                            
                                             <hr>
+                                            
                                             <ul>
                                                 <li class="fw-bold">Account Owner: </li>
                                                 <li>' . $row['account_owner'] . '</li>
                                                 <li class="fw-bold">Date Added: </li>
                                                 <li>' . $row['date_added'] . '</li>
                                             </ul>
-                                            <hr>
+                                            
                                         </div>
                                     </div>
                                 </div>';
@@ -98,11 +108,11 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                         <form onsubmit="submitAddForm(event)" name="add-form">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 my-1">
-                                    <label class="form-label">Title <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great titles are clear and concise."></i> <span class="badge bg-danger">Required</span></label>
+                                    <label class="form-label">Title <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great titles are clear and concise."></i></label>
                                     <input type="text" class="form-control" name="textFieldTitle" id="textFieldTitle" required>
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
-                                    <label class="form-label">Account Owner <span class="badge bg-danger">Required</span></label>
+                                    <label class="form-label">Account Owner</label>
                                     <input type="text" class="form-control" name="textFieldAccountOwner" id="textFieldAccountOwner" required>
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
@@ -114,7 +124,7 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                                     <input type="text" class="form-control" name="textFieldEmailRecords" id="textFieldEmailRecords">
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
-                                    <label class="form-label">Password <span class="badge bg-danger">Required</span></label>
+                                    <label class="form-label">Password</label>
                                     <input type="text" class="form-control" name="textFieldPasswordRecords" id="textFieldPasswordRecords" required>
                                 </div>
                                 <div class="col-sm-12 col-md-6 my-1">
@@ -161,7 +171,6 @@ $pageaddFormJSVersion = filemtime('./scripts/addForm.js');
                         </div>
                     </div>
                 </div>
-
 
                 <div class="accountPreferenceForm my-3">
                     <h2>Account Preferences</h2>

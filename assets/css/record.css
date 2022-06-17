@@ -1,0 +1,26 @@
+li {
+    list-style-type: none;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .go-back {
+    text-decoration: none;
+    color: green;
+  }
+  
+  .go-back:hover {
+    text-decoration: underline;
+    color: green;
+  }
+  
+  .edit, .delete {
+    text-decoration: none;
+  }
+  .edit:hover, .delete:hover {
+    text-decoration: underline;
+  }
+  

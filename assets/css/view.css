@@ -16,3 +16,10 @@ ul {
   text-decoration: underline;
   color: green;
 }
+
+.edit, .delete {
+  text-decoration: none;
+}
+.edit:hover, .delete:hover {
+  text-decoration: underline;
+}
