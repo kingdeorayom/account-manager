@@ -112,7 +112,7 @@ $pageUpdatePasswordJSVersion = filemtime('./scripts/updatePassword.js');
                     <h2>Add a new record</h2>
 
                     <div class='border border-1 bg-light px-3 my-4'>
-                        <p class='my-3'><i class='fas fa-lock mx-1' style='color: #012265;'></i> The information you will input are to be encrypted. Rest assured all information provided here are not stored elsewhere and could not be accessed other than you.</p>
+                        <p class='my-3'><i class='fas fa-lock mx-1' style='color: #012265;'></i> The information you will input are to be encrypted, not stored elsewhere and could not be accessed by anyone other than you.</p>
                     </div>
 
                     <div class="addForm">
