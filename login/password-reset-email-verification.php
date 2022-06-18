@@ -62,7 +62,7 @@ $pagecssVersion = filemtime('../assets/css/login.css');
                     <form onsubmit="submitVerificationCode(event)" name="verification-code-form">
                         <!-- <form action="../../process/reset-password-redirect.php" method="POST"> -->
                         <!-- <p class="login-text">We sent a verification code to the email you used to register. Enter the code below to verify your account.</p> -->
-                        <input type="text" class="form-control mb-3" name="textFieldVerificationCode" id="textFieldVerificationCode" autofocus>
+                        <input type="text" class="form-control mb-3" name="textFieldVerificationCode" id="textFieldVerificationCode" autofocus maxlength="6">
                         <button class="btn text-white w-100 mb-2 bg-success" type="submit" name="buttonSubmit" id="buttonSubmit">Submit</button>
                         <a href="../process/logout.php"> <button class="btn text-white w-100 bg-secondary button-cancel" type="button" name="buttonCancel" id="buttonCancel">Cancel</button></a>
                     </form>

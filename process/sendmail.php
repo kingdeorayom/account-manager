@@ -15,13 +15,13 @@ $mail = new PHPMailer(true);
 try {
     $mail->SMTPDebug = 0;
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com;';
+    $mail->Host = 'smtp.hostinger.com;';
     $mail->SMTPAuth = true;
-    $mail->Username = 'saliksikuphsl@gmail.com';
-    $mail->Password = 'kingdeorayom();';
+    $mail->Username = 'acctmgr@account-manager.online';
+    $mail->Password = 'Serkingd28();';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
-    $mail->setFrom('saliksikuphsl@gmail.com', 'SALIKSIK: UPHSL Research Repository');
+    $mail->setFrom('acctmgr@account-manager.online', 'Account Manager');
     $mail->isHTML(true);
 
     if (isset($_SESSION['toVerifyAccountCreation'])) {
