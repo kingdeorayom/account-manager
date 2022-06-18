@@ -11,7 +11,7 @@ include './process/connection.php';
 $sql = "SELECT * FROM records WHERE user_id = " . $_SESSION['id'] . " ORDER BY record_id DESC LIMIT 4";
 $result = $connection->query($sql);
 
-$getName = "SELECT name FROM users WHERE user_id = '1'";
+$getName = "SELECT name FROM users WHERE user_id = " . $_SESSION['id'] . "";
 $getNameResult = $connection->query($getName);
 
 $maincssVersion = filemtime('./assets/css/main.css');
