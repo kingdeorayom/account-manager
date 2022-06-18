@@ -110,12 +110,15 @@ $pageUpdatePasswordJSVersion = filemtime('./scripts/updatePassword.js');
 
                 <div id="addNewRecordPanel" class="my-3">
                     <h2>Add a new record</h2>
-                    <div class="row py-2" id="alert-container-add-record">
-                        <!--  -->
+
+                    <div class='border border-1 bg-light px-3 my-4'>
+                        <p class='my-3'><i class='fas fa-lock mx-1' style='color: #012265;'></i> The information you will input are to be encrypted. Rest assured all information provided here are not stored elsewhere and could not be accessed other than you.</p>
                     </div>
+
                     <div class="addForm">
                         <form onsubmit="submitAddForm(event)" name="add-form">
                             <div class="row">
+
                                 <div class="col-sm-12 col-md-6 my-1">
                                     <label class="form-label">Title <i class="fas fa-question-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="Great titles are clear and concise."></i></label>
                                     <input type="text" class="form-control" name="textFieldTitle" id="textFieldTitle" required>

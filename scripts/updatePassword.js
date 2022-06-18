@@ -24,7 +24,9 @@ function checkResponseUpdatePassword(data) {
             'Password updated successfully!',
             'You may edit your record for any input mistake.',
             'success'
-        )
+        ).then(function() {
+            location.reload();
+        })
     }
 
     if (data.response === "empty_fields") {
